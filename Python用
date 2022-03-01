@@ -1,0 +1,38 @@
+import investpy
+
+# AAPLの株価データの取得dd/mm/yyyyで指定
+df = investpy.get_stock_historical_data(stock='AAPL', country='united states',
+                                        from_date='01/01/2010',to_date='10/06/2021')
+
+
+from datetime import date
+
+# 本日日付を準備
+today = date.today().strftime('%d/%m/%Y')
+
+# ETF SPYのデータ取得
+df = investpy.get_etf_historical_data(etf='SPDR S&P 500',country='united states',
+                                      from_date='01/01/2010',to_date=today)
+
+
+# S&P 500のデータ取得
+df = investpy.get_index_historical_data(index='S&P 500',country='united states',
+                                        from_date='01/01/2010',to_date=today)
+
+
+# AAPLのプロファイルを取得例
+data = investpy.get_stock_company_profile('AAPL',country='united states')
+print(data['desc']) # 企業の概説の表示
+
+
+# AAPLの財務諸表データの取得例
+# income statement
+PL = investpy.stocks.get_stock_financial_summary('AAPL', 'united states',
+                                                 summary_type='income_statement', period='annual')
+# balance sheet
+PL = investpy.stocks.get_stock_financial_summary('AAPL', 'united states',
+                                                 summary_type='balance_sheet', period='annual')
+
+# cash flow statement
+CF = investpy.stocks.get_stock_financial_summary('AAPL', 'united states',
+                                                 summary_type='cash_flow_statement', period='annual')
